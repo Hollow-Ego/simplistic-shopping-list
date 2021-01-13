@@ -1,0 +1,16 @@
+<div #shoppingItem>
+  <ion-item>
+
+    <ion-label *ngIf="item.name">
+      <h2>{{item.name}}</h2>
+    </ion-label>
+
+    <ion-text class="shopping-list-item-label" *ngIf="item.amount" class="ion-padding-start">
+      {{item.amount}}
+    </ion-text>
+
+    <ion-thumbnail [slot]="'end'" *ngIf="item.imgUrl || item.amount" (click)="onItemClick(item.name, item.imgUrl)">
+      <ion-img *ngIf="item.imgUrl" [src]="item.imgUrl"></ion-img>
+    </ion-thumbnail>
+  </ion-item>
+</div>

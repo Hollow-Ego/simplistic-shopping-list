@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from '../../app.module';
+import { HttpLoaderFactory } from '../app.module';
 import { IonicModule } from '@ionic/angular';
 
 @NgModule({
@@ -11,13 +11,7 @@ import { IonicModule } from '@ionic/angular';
     CommonModule,
     CommonModule,
     IonicModule,
-    TranslateModule.forChild({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-    }),
+    TranslateModule.forChild({ extend: true }),
   ],
   exports: [TranslateModule],
 })

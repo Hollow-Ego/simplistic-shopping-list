@@ -7,7 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { ShoppingListPageRoutingModule } from './shopping-list-routing.module';
 
 import { ShoppingListPage } from './shopping-list.page';
-import { SharedModule } from '../shared/shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
+import { ShoppingListItemComponent } from './shopping-list-item/shopping-list-item.component';
+import { ImageModalComponent } from '../shared/modals/image/image-modal.component';
+import { NewEditItemComponent } from './new-edit-item/new-edit-item.component';
 
 @NgModule({
   imports: [
@@ -17,6 +20,11 @@ import { SharedModule } from '../shared/shared/shared.module';
     ShoppingListPageRoutingModule,
     SharedModule,
   ],
-  declarations: [ShoppingListPage],
+  declarations: [
+    ShoppingListPage,
+    ShoppingListItemComponent,
+    ImageModalComponent,
+    NewEditItemComponent,
+  ],
 })
 export class ShoppingListPageModule {}

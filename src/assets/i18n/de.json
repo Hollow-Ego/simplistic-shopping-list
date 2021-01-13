@@ -2,5 +2,16 @@
     "appname": "Simple Einkaufsliste",
     "listingTitle": "Einkaufsliste",
     "addButtonText": "Hinzufügen",
-    "deleteButtonText": "Entfernen"
+    "deleteButtonText": "Entfernen",
+    "newEditItem":{
+        "title-new":"Neuer Artikel",
+        "title-edit":"Artikel bearbeiten",
+        "name" : "Name",
+        "amount": "Menge",
+        "imgUrl": "Bild",
+        "optionalText": "Optional",
+        "addText": "Hinzufügen",
+        "saveText":"Speichern",
+        "cancelText": "Abbrechen"
+    }
 }
