@@ -1,5 +1,7 @@
 {
   "name": "simplistic-shoping-list",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
