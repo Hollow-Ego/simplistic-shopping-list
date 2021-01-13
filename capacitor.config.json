@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "simplistic-shoping-list",
+  "appId": "com.simplisitc.shopping.list.pahn",
+  "appName": "Simplistic Shopping List",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
