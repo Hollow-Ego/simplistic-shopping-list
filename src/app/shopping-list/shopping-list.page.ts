@@ -24,32 +24,9 @@ export class ShoppingListPage implements OnInit, OnDestroy {
     this.shoppingItemsSub = this.shoppingListService.shoppingList.subscribe(
       shoppingList => {
         this.shoppingList = shoppingList;
-        // this.syncShoppingLists(shoppingList);
       }
     );
   }
-
-  // syncShoppingLists(newList: Map<string, ShoppingListItem>) {
-  //   if (!this.shoppingList) {
-  //     this.shoppingList = newList;
-  //   }
-
-  //   const removedItems = [];
-  //   this.shoppingList.forEach((value, key) => {
-  //     if (!newList.has(key)) {
-  //       removedItems.push(key);
-  //     }
-  //   });
-  //   newList.forEach((value, key) => {
-  //     if (!this.shoppingList.has(key)) {
-  //       this.shoppingList.set(key, value);
-  //     }
-  //   });
-
-  //   removedItems.forEach(key => {
-  //     this.shoppingList.delete(key);
-  //   });
-  // }
 
   async onEditItem(item: ShoppingListItem, slidingItem: IonItemSliding) {
     slidingItem.close();

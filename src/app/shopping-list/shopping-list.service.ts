@@ -8,14 +8,6 @@ import { Storage } from '@ionic/storage';
 @Injectable({
   providedIn: 'root',
 })
-
-// [
-//     ['a', new ShoppingListItem(null, null, 'https://bit.ly/3pIjJEy')],
-//     ['b', new ShoppingListItem('Milk', null, 'https://bit.ly/3pIjJEy')],
-//     ['c', new ShoppingListItem('Cheese', '3kg', 'https://bit.ly/3pIjJEy')],
-//     ['d', new ShoppingListItem('Toiletpaper', '10x')],
-//     ['e', new ShoppingListItem('Snacks')],
-//   ]
 export class ShoppingListService {
   private _shoppingList = new BehaviorSubject<Map<string, ShoppingListItem>>(
     new Map()
@@ -32,7 +24,10 @@ export class ShoppingListService {
           take(1),
           tap(shoppingList => {
             storage.forEach((value, key) => {
-              shoppingList.set(key, value);
+              const { name, amount, imgUrl } = JSON.parse(value);
+
+              const item = new ShoppingListItem(name, amount, imgUrl);
+              shoppingList.set(key, item);
             });
             this._shoppingList.next(shoppingList);
           })
@@ -47,8 +42,9 @@ export class ShoppingListService {
     return this.shoppingList.pipe(
       take(1),
       tap(shoppingList => {
-        this.storage.set(uuid, JSON.stringify(newItem));
-        this._shoppingList.next(shoppingList.set(uuid, newItem));
+        this.storage.set(uuid, JSON.stringify(newItem)).then(() => {
+          this._shoppingList.next(shoppingList.set(uuid, newItem));
+        });
       })
     );
   }
