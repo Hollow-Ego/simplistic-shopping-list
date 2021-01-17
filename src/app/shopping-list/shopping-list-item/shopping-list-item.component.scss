@@ -22,3 +22,12 @@ ion-item {
   color: #fff;
   margin-right: 20px;
 }
+
+.item-height {
+  min-height: 73px;
+  max-height: 75px;
+}
+
+.item-full-height {
+  --min-height: 73px;
+}

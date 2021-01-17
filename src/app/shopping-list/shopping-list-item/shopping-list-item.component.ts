@@ -6,9 +6,15 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { GestureController, PopoverController } from '@ionic/angular';
+import {
+  GestureController,
+  IonItemSliding,
+  ModalController,
+  PopoverController,
+} from '@ionic/angular';
 import { ImageModalComponent } from '../../shared/modals/image/image-modal.component';
 import { ShoppingListItem } from '../models/shopping-list-item.model';
+import { NewEditItemComponent } from '../new-edit-item/new-edit-item.component';
 import { ShoppingListService } from '../shopping-list.service';
 
 @Component({
@@ -16,7 +22,7 @@ import { ShoppingListService } from '../shopping-list.service';
   templateUrl: './shopping-list-item.component.html',
   styleUrls: ['./shopping-list-item.component.scss'],
 })
-export class ShoppingListItemComponent implements OnInit, AfterViewInit {
+export class ShoppingListItemComponent implements OnInit {
   @Input() item: ShoppingListItem;
   @ViewChild('shoppingItem') shoppingItemRef: ElementRef;
   private lastOnStart = 0;
@@ -24,27 +30,11 @@ export class ShoppingListItemComponent implements OnInit, AfterViewInit {
 
   constructor(
     private popoverCtrl: PopoverController,
-    private gestureCtrl: GestureController,
+    private modalCtrl: ModalController,
     private shoppingListService: ShoppingListService
   ) {}
 
   ngOnInit() {}
-
-  ngAfterViewInit() {
-    const gesture = this.gestureCtrl.create(
-      {
-        gestureName: 'double-click',
-        el: this.shoppingItemRef.nativeElement,
-        threshold: 0,
-        onStart: () => {
-          this.onStartDoubleClick();
-        },
-      },
-      true
-    );
-
-    gesture.enable();
-  }
 
   onStartDoubleClick() {
     const now = Date.now();
@@ -69,5 +59,18 @@ export class ShoppingListItemComponent implements OnInit, AfterViewInit {
       backdropDismiss: true,
     });
     await popover.present();
+  }
+
+  async onEditItem(item: ShoppingListItem, slidingItem: IonItemSliding) {
+    slidingItem.close();
+
+    const modal = await this.modalCtrl.create({
+      component: NewEditItemComponent,
+      componentProps: {
+        isEditMode: true,
+        item,
+      },
+    });
+    await modal.present();
   }
 }

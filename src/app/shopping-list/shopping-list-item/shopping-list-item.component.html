@@ -1,16 +1,24 @@
-<div #shoppingItem>
-  <ion-item>
+<ion-item-sliding #slidingItem (click)="onStartDoubleClick()" class="item-height">
+  <div #shoppingItem>
+    <ion-item class="item-full-height">
 
-    <ion-label *ngIf="item.name">
-      <h2>{{item.name}}</h2>
-    </ion-label>
+      <ion-label *ngIf="item.name">
+        <h2>{{item.name}}</h2>
+      </ion-label>
 
-    <ion-text class="shopping-list-item-label" *ngIf="item.amount" class="ion-padding-start">
-      {{item.amount}}
-    </ion-text>
+      <ion-text class="shopping-list-item-label" *ngIf="item.amount" class="ion-padding-start">
+        {{item.amount}}
+      </ion-text>
 
-    <ion-thumbnail [slot]="'end'" *ngIf="item.imgUrl || item.amount" (click)="onItemClick(item.name, item.imgUrl)">
-      <ion-img *ngIf="item.imgUrl" [src]="item.imgUrl"></ion-img>
-    </ion-thumbnail>
-  </ion-item>
-</div>
+      <ion-thumbnail [slot]="'end'" *ngIf="item.imgUrl || item.amount" (click)="onItemClick(item.name, item.imgUrl)">
+        <ion-img *ngIf="item.imgUrl" [src]="item.imgUrl"></ion-img>
+      </ion-thumbnail>
+    </ion-item>
+  </div>
+
+  <ion-item-options side="end">
+    <ion-item-option color="secondary" (click)="onEditItem(item, slidingItem)">
+      <ion-icon name="create" slot="icon-only"></ion-icon>
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>

@@ -13,6 +13,7 @@ import { ShoppingListService } from './shopping-list.service';
 })
 export class ShoppingListPage implements OnInit, OnDestroy {
   public shoppingList: ShoppingListItem[];
+  public shoppingListMap: Map<number, ShoppingListItem>;
   private shoppingItemsSub: Subscription;
   constructor(
     private translate: TranslationService,
@@ -23,9 +24,32 @@ export class ShoppingListPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.shoppingItemsSub = this.shoppingListService.shoppingList.subscribe(
       shoopingList => {
-        this.shoppingList = shoopingList;
+        // this.shoppingList = shoopingList;
+        this.syncShoppingLists(shoopingList);
       }
     );
+  }
+
+  syncShoppingLists(newList: ShoppingListItem[]) {
+    if (!this.shoppingList) {
+      this.shoppingList = newList;
+    }
+
+    const removedItems = [];
+    this.shoppingList.forEach(item => {
+      if (!newList.includes(item)) {
+        removedItems.push(item);
+      }
+    });
+    newList.forEach(item => {
+      if (!this.shoppingList.includes(item)) {
+        this.shoppingList.push(item);
+      }
+    });
+
+    removedItems.forEach(item => {
+      this.shoppingList.splice(this.shoppingList.indexOf(item), 1);
+    });
   }
 
   async onEditItem(item: ShoppingListItem, slidingItem: IonItemSliding) {
