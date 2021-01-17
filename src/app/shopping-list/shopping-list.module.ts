@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ShoppingListItemComponent } from './shopping-list-item/shopping-list-item.component';
 import { ImageModalComponent } from '../shared/modals/image/image-modal.component';
 import { NewEditItemComponent } from './new-edit-item/new-edit-item.component';
+import { ImagePickerComponent } from '../shared/image-picker/image-picker.component';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { NewEditItemComponent } from './new-edit-item/new-edit-item.component';
     ShoppingListItemComponent,
     ImageModalComponent,
     NewEditItemComponent,
+    ImagePickerComponent,
   ],
 })
 export class ShoppingListPageModule {}

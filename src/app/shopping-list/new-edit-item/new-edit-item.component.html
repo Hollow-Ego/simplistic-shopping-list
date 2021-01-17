@@ -30,7 +30,7 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <!-- <ion-row>
         <ion-col size-sm="6" offset-sm="3">
           <ion-item>
             <ion-label position="floating">
@@ -39,6 +39,13 @@
             <ion-input ngModel name="imgUrl" type="text" [ngModel]="item[1].imgUrl"></ion-input>
           </ion-item>
         </ion-col>
+      </ion-row> -->
+      <ion-row>
+        <ion-col size-sm="6" offest-sm="3">
+          <app-image-picker [pickedImage]="item[1].imgData ? item[1].imgData.webviewPath : null"
+            (imagePick)="onImagePicked($event)">
+          </app-image-picker>
+        </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size-sm="6" offset-sm="3">
@@ -46,6 +53,7 @@
             {{ submitButtonText | translate }}</ion-button>
         </ion-col>
       </ion-row>
+
     </ion-grid>
   </form>
 </ion-content>

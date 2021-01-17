@@ -26,6 +26,7 @@ export class ShoppingListPage implements OnInit, OnDestroy {
         this.shoppingList = shoppingList;
       }
     );
+    this.shoppingListService.loadShoppingList();
   }
 
   async onEditItem(item: ShoppingListItem, slidingItem: IonItemSliding) {

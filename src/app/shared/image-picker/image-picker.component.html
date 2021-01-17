@@ -1,0 +1,10 @@
+<div class="picker">
+  <ion-img class="item-img" role="button" [src]="selectedImage.webviewPath" *ngIf="selectedImage && showPreview"
+    (click)="onPickImage()">
+  </ion-img>
+  <ion-button color="primary" (click)="onPickImage()" *ngIf="!selectedImage || !showPreview">
+    <ion-icon slot="start" name="camera"></ion-icon>
+    <ion-label>{{'newEditItem.takePictureText' | translate}}</ion-label>
+  </ion-button>
+</div>
+<input type="file" *ngIf="useFilePicker" accept="image/jpeg" #filePicker (change)="onFilePicked($event)" />

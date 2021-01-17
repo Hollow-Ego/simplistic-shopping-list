@@ -10,9 +10,10 @@
         {{item[1].amount}}
       </ion-text>
 
-      <ion-thumbnail [slot]="'end'" *ngIf="item[1].imgUrl || item[1].amount"
-        (click)="onItemClick(item[1].name, item[1].imgUrl)">
-        <ion-img *ngIf="item[1].imgUrl" [src]="item[1].imgUrl"></ion-img>
+      <ion-thumbnail [slot]="'end'" *ngIf="item[1].imgData || item[1].amount">
+        <ion-img *ngIf="item[1].imgData" [src]="item[1].imgData.webviewPath"
+          (click)="onItemClick(item[1].name, item[1].imgData.webviewPath)">
+        </ion-img>
       </ion-thumbnail>
     </ion-item>
   </div>

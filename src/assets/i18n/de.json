@@ -12,6 +12,7 @@
         "optionalText": "Optional",
         "addText": "Hinzufügen",
         "saveText":"Speichern",
-        "cancelText": "Abbrechen"
+        "cancelText": "Abbrechen",
+        "takePictureText": "Bild aufnehmen/auswählen"
     }
 }
