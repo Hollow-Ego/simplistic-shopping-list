@@ -16,7 +16,7 @@ export class NewEditItemComponent implements OnInit {
   public isEditMode = false;
   public modalTitle: string;
   public submitButtonText: string;
-  @Input() item: ShoppingListItem;
+  @Input() item: [string, ShoppingListItem];
 
   constructor(
     private translate: TranslationService,
@@ -26,7 +26,8 @@ export class NewEditItemComponent implements OnInit {
 
   ngOnInit() {
     if (!this.item) {
-      this.item = new ShoppingListItem(null, null, null, null);
+      this.item = ['', new ShoppingListItem(null, null, null)];
+      this.isEditMode = false;
     }
 
     this.modalTitle = this.isEditMode
@@ -51,16 +52,11 @@ export class NewEditItemComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    let sub: Observable<ShoppingListItem[]>;
+    let sub: Observable<Map<string, ShoppingListItem>>;
     const { itemname, amount, imgUrl } = form.value;
     if (this.isEditMode) {
-      const editItem = new ShoppingListItem(
-        this.item.id,
-        itemname,
-        amount,
-        imgUrl
-      );
-      sub = this.shoppingListService.editItem(editItem);
+      const editItem = new ShoppingListItem(itemname, amount, imgUrl);
+      sub = this.shoppingListService.editItem(editItem, this.item[0]);
     } else {
       sub = this.shoppingListService.addItem(itemname, amount, imgUrl);
     }

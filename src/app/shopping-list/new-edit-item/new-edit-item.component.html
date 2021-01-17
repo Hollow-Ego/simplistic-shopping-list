@@ -16,7 +16,7 @@
             <ion-label position="floating">
               {{ 'newEditItem.name' | translate }}
             </ion-label>
-            <ion-input ngModel name="itemname" type="text" [ngModel]="item.name"></ion-input>
+            <ion-input ngModel name="itemname" type="text" [ngModel]="item[1].name"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -26,7 +26,7 @@
             <ion-label position="floating">
               {{ 'newEditItem.amount' | translate }}
             </ion-label>
-            <ion-input ngModel name="amount" type="text" [ngModel]="item.amount"></ion-input>
+            <ion-input ngModel name="amount" type="text" [ngModel]="item[1].amount"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -36,7 +36,7 @@
             <ion-label position="floating">
               {{ 'newEditItem.imgUrl' | translate }}
             </ion-label>
-            <ion-input ngModel name="imgUrl" type="text" [ngModel]="item.imgUrl"></ion-input>
+            <ion-input ngModel name="imgUrl" type="text" [ngModel]="item[1].imgUrl"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>

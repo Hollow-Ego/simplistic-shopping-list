@@ -12,8 +12,7 @@ import { ShoppingListService } from './shopping-list.service';
   styleUrls: ['./shopping-list.page.scss'],
 })
 export class ShoppingListPage implements OnInit, OnDestroy {
-  public shoppingList: ShoppingListItem[];
-  public shoppingListMap: Map<number, ShoppingListItem>;
+  public shoppingList: Map<string, ShoppingListItem>;
   private shoppingItemsSub: Subscription;
   constructor(
     private translate: TranslationService,
@@ -23,34 +22,34 @@ export class ShoppingListPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.shoppingItemsSub = this.shoppingListService.shoppingList.subscribe(
-      shoopingList => {
-        // this.shoppingList = shoopingList;
-        this.syncShoppingLists(shoopingList);
+      shoppingList => {
+        this.shoppingList = shoppingList;
+        // this.syncShoppingLists(shoppingList);
       }
     );
   }
 
-  syncShoppingLists(newList: ShoppingListItem[]) {
-    if (!this.shoppingList) {
-      this.shoppingList = newList;
-    }
+  // syncShoppingLists(newList: Map<string, ShoppingListItem>) {
+  //   if (!this.shoppingList) {
+  //     this.shoppingList = newList;
+  //   }
 
-    const removedItems = [];
-    this.shoppingList.forEach(item => {
-      if (!newList.includes(item)) {
-        removedItems.push(item);
-      }
-    });
-    newList.forEach(item => {
-      if (!this.shoppingList.includes(item)) {
-        this.shoppingList.push(item);
-      }
-    });
+  //   const removedItems = [];
+  //   this.shoppingList.forEach((value, key) => {
+  //     if (!newList.has(key)) {
+  //       removedItems.push(key);
+  //     }
+  //   });
+  //   newList.forEach((value, key) => {
+  //     if (!this.shoppingList.has(key)) {
+  //       this.shoppingList.set(key, value);
+  //     }
+  //   });
 
-    removedItems.forEach(item => {
-      this.shoppingList.splice(this.shoppingList.indexOf(item), 1);
-    });
-  }
+  //   removedItems.forEach(key => {
+  //     this.shoppingList.delete(key);
+  //   });
+  // }
 
   async onEditItem(item: ShoppingListItem, slidingItem: IonItemSliding) {
     slidingItem.close();

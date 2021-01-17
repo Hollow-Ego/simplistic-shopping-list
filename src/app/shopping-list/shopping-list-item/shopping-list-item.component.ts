@@ -1,13 +1,5 @@
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import {
-  GestureController,
   IonItemSliding,
   ModalController,
   PopoverController,
@@ -23,7 +15,7 @@ import { ShoppingListService } from '../shopping-list.service';
   styleUrls: ['./shopping-list-item.component.scss'],
 })
 export class ShoppingListItemComponent implements OnInit {
-  @Input() item: ShoppingListItem;
+  @Input() item: [string, ShoppingListItem];
   @ViewChild('shoppingItem') shoppingItemRef: ElementRef;
   private lastOnStart = 0;
   private DOUBLE_CLICK_THRESHOLD = 500;
@@ -39,7 +31,7 @@ export class ShoppingListItemComponent implements OnInit {
   onStartDoubleClick() {
     const now = Date.now();
     if (Math.abs(now - this.lastOnStart) <= this.DOUBLE_CLICK_THRESHOLD) {
-      this.shoppingListService.removeItem(this.item.id).subscribe(() => {
+      this.shoppingListService.removeItem(this.item[0]).subscribe(() => {
         this.lastOnStart = 0;
       });
     } else {
@@ -61,7 +53,10 @@ export class ShoppingListItemComponent implements OnInit {
     await popover.present();
   }
 
-  async onEditItem(item: ShoppingListItem, slidingItem: IonItemSliding) {
+  async onEditItem(
+    item: [string, ShoppingListItem],
+    slidingItem: IonItemSliding
+  ) {
     slidingItem.close();
 
     const modal = await this.modalCtrl.create({
