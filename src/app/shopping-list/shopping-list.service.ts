@@ -23,43 +23,35 @@ export class ShoppingListService {
   constructor(private storage: Storage, private platform: Platform) {}
 
   async loadShoppingList() {
-    await this.storage.ready();
+    await this.storage.ready().then(() => console.log('Storage is ready'));
     const loadedItems = [];
-    console.log('Loading');
 
-    this.storage.forEach(async (value, key) => {
+    await this.storage.forEach((value, key) => {
       loadedItems.push({ ...JSON.parse(value), id: key });
     });
 
-    this.shoppingList
-      .pipe(
-        take(1),
-        tap(async shoppingList => {
-          await Promise.all(
-            loadedItems.map(async loadedItem => {
-              console.dir(loadedItem);
+    const convertedList: Map<string, ShoppingListItem> = new Map();
+    console.dir(loadedItems);
+    for await (const loadedItem of loadedItems) {
+      const { name, amount, imgData, id } = loadedItem;
+      // checks if we are on desktop
+      if (
+        (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
+        this.platform.is('desktop')
+      ) {
+        const readFile = await Filesystem.readFile({
+          path: imgData.filepath,
+          directory: FilesystemDirectory.Data,
+        });
 
-              const { name, amount, imgData, id } = loadedItem;
-              if (
-                (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
-                this.platform.is('desktop')
-              ) {
-                const readFile = await Filesystem.readFile({
-                  path: imgData.filepath,
-                  directory: FilesystemDirectory.Data,
-                });
-
-                // Web platform only: Load the photo as base64 data
-                imgData.webviewPath = `data:image/jpeg;base64,${readFile.data}`;
-              }
-              const item = new ShoppingListItem(name, amount, imgData);
-              shoppingList.set(id, item);
-            })
-          );
-          this._shoppingList.next(shoppingList);
-        })
-      )
-      .subscribe();
+        // Web platform only: Load the photo as base64 data
+        imgData.webviewPath = `data:image/jpeg;base64,${readFile.data}`;
+      }
+      const item = new ShoppingListItem(name, amount, imgData);
+      convertedList.set(id, item);
+    }
+    console.dir(convertedList);
+    this._shoppingList.next(convertedList);
   }
 
   addItem(name: string, amount: string, imgData: Image) {
