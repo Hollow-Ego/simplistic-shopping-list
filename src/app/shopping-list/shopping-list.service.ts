@@ -6,8 +6,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { Storage } from '@ionic/storage';
 import { Image } from './models/image.model';
 import { Platform } from '@ionic/angular';
-import { Filesystem, FilesystemDirectory } from '@capacitor/core';
-
+import { Plugins, FilesystemDirectory } from '@capacitor/core';
+import { ImageService } from '../shared/image.service';
+const { Filesystem } = Plugins;
 @Injectable({
   providedIn: 'root',
 })
@@ -20,10 +21,14 @@ export class ShoppingListService {
     return this._shoppingList.asObservable();
   }
 
-  constructor(private storage: Storage, private platform: Platform) {}
+  constructor(
+    private storage: Storage,
+    private platform: Platform,
+    private imageService: ImageService
+  ) {}
 
   async loadShoppingList() {
-    await this.storage.ready().then(() => console.log('Storage is ready'));
+    await this.storage.ready().then();
     const loadedItems = [];
 
     await this.storage.forEach((value, key) => {
@@ -31,14 +36,11 @@ export class ShoppingListService {
     });
 
     const convertedList: Map<string, ShoppingListItem> = new Map();
-    console.dir(loadedItems);
+
     for await (const loadedItem of loadedItems) {
       const { name, amount, imgData, id } = loadedItem;
-      // checks if we are on desktop
-      if (
-        (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
-        this.platform.is('desktop')
-      ) {
+
+      if (!this.platform.is('hybrid')) {
         const readFile = await Filesystem.readFile({
           path: imgData.filepath,
           directory: FilesystemDirectory.Data,
@@ -81,7 +83,12 @@ export class ShoppingListService {
     return this.shoppingList.pipe(
       take(1),
       tap(shoppingList => {
-        this.storage.remove(id).then(() => {
+        this.storage.remove(id).then(async () => {
+          const obj = shoppingList.get(id);
+          if (obj.imgData) {
+            const path = obj.imgData.fileName;
+            this.imageService.deleteImage(path);
+          }
           shoppingList.delete(id);
           this._shoppingList.next(shoppingList);
         });

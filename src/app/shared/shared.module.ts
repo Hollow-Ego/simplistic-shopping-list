@@ -1,9 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from '../app.module';
 import { IonicModule } from '@ionic/angular';
+import {
+  Capacitor,
+  CameraSource,
+  CameraResultType,
+  Plugins,
+  CameraPhoto,
+  FilesystemDirectory,
+} from '@capacitor/core';
+const { Filesystem, Camera } = Plugins;
 
 @NgModule({
   declarations: [],
