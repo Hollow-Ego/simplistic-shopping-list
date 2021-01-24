@@ -57,6 +57,7 @@ export class ShoppingListPage implements OnInit, OnDestroy {
 
   onLanguageChange(ev: CustomEvent) {
     this.translate.changeLanguage(ev.detail.value);
+    this.language = ev.detail.value;
   }
 
   ngOnDestroy() {

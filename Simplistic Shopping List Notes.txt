@@ -1,4 +1,0 @@
-#------------- Simplistic Shoping List -------------
-> custom loading spinner
-> swipe or double tap to delete
-> Multi language support (Ger/Eng)

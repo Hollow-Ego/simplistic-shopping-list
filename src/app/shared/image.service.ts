@@ -20,7 +20,7 @@ export class ImageService {
   async takeImage() {
     const capturedImage = await Camera.getPhoto({
       resultType: CameraResultType.Base64,
-      source: CameraSource.Camera,
+      source: CameraSource.Prompt,
       quality: 100,
       correctOrientation: true,
     });

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { take } from 'rxjs/operators';
 import { LanguageDetails } from './language-details.model';
 
 @Injectable({
@@ -35,5 +36,9 @@ export class TranslationService {
   changeLanguage(lang: string) {
     this._currentLanguage = lang;
     this.translate.use(lang);
+  }
+
+  getTranslation(key: string) {
+    return this.translate.get(key).pipe(take(1));
   }
 }

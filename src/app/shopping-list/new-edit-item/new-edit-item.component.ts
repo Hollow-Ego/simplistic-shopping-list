@@ -47,8 +47,9 @@ export class NewEditItemComponent implements OnInit {
   }
 
   isFormValid(form: NgForm) {
-    const { itemname, amount, imgData } = form.value;
-    if (!itemname && !amount && !imgData) {
+    const { itemname, amount } = form.value;
+
+    if (!itemname && !amount && !this.currentImage) {
       return false;
     }
     return true;

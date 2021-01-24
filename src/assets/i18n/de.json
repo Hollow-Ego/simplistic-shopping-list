@@ -5,6 +5,7 @@
     "deleteButtonText": "Entfernen",
     "confirmButtonText": "Okay",
     "cancelButtonText": "Abbrechen",
+    "closeToast": "Erneut tippen um App zu schließen!",
     "newEditItem":{
         "title-new":"Neuer Artikel",
         "title-edit":"Artikel bearbeiten",

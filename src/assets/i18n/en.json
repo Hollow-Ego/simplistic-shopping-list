@@ -5,6 +5,7 @@
     "deleteButtonText": "Delete",
     "confirmButtonText": "Okay",
     "cancelButtonText": "Cancel",
+    "closeToast": "Tap back again to close app!",
     "newEditItem":{
         "title-new":"New Item",
         "title-edit":"Edit Item",
