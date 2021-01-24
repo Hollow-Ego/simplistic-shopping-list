@@ -5,6 +5,7 @@ import { TranslationService } from '../shared/i18n/translation.service';
 import { NewEditItemComponent } from './new-edit-item/new-edit-item.component';
 import { ShoppingListItem } from './models/shopping-list-item.model';
 import { ShoppingListService } from './shopping-list.service';
+import { LanguageDetails } from '../shared/i18n/language-details.model';
 
 @Component({
   selector: 'app-shopping-list',
@@ -14,6 +15,9 @@ import { ShoppingListService } from './shopping-list.service';
 export class ShoppingListPage implements OnInit, OnDestroy {
   public shoppingList: Map<string, ShoppingListItem>;
   private shoppingItemsSub: Subscription;
+  public language: string;
+  public availableLanguages: LanguageDetails[];
+
   constructor(
     private translate: TranslationService,
     private shoppingListService: ShoppingListService,
@@ -27,6 +31,8 @@ export class ShoppingListPage implements OnInit, OnDestroy {
       }
     );
     this.shoppingListService.loadShoppingList();
+    this.language = this.translate.currentLanguage;
+    this.availableLanguages = this.translate.avaiableLanguages;
   }
 
   async onEditItem(item: ShoppingListItem, slidingItem: IonItemSliding) {
@@ -47,6 +53,10 @@ export class ShoppingListPage implements OnInit, OnDestroy {
       component: NewEditItemComponent,
     });
     await modal.present();
+  }
+
+  onLanguageChange(ev: CustomEvent) {
+    this.translate.changeLanguage(ev.detail.value);
   }
 
   ngOnDestroy() {

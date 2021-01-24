@@ -3,6 +3,8 @@
     "listingTitle": "Einkaufsliste",
     "addButtonText": "Hinzufügen",
     "deleteButtonText": "Entfernen",
+    "confirmButtonText": "Okay",
+    "cancelButtonText": "Abbrechen",
     "newEditItem":{
         "title-new":"Neuer Artikel",
         "title-edit":"Artikel bearbeiten",

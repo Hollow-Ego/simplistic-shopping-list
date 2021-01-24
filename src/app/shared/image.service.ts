@@ -18,15 +18,12 @@ export class ImageService {
   constructor(private platform: Platform) {}
 
   async takeImage() {
-    console.log('Taking image');
-
     const capturedImage = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Prompt,
+      resultType: CameraResultType.Base64,
+      source: CameraSource.Camera,
       quality: 100,
       correctOrientation: true,
     });
-
     return capturedImage;
   }
 
@@ -35,28 +32,30 @@ export class ImageService {
       return;
     }
 
-    const base64Data = await this.readAsBase64(cameraPhoto);
-
     // Write the file to the data directory
-
     const fileName = new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
       path: fileName,
-      data: base64Data,
+      data: cameraPhoto.base64String,
       directory: FilesystemDirectory.Data,
     });
 
+    // const pathParts = cameraPhoto.path.split('cache/');
+    // Filesystem.deleteFile({
+    //   path: 'Pictures/' + pathParts[1],
+    //   directory: FilesystemDirectory.Cache,
+    // }).catch(err => {
+    //   console.log(err);
+    //   Toast.show({ text: 'Error on deleting image' });
+    // });
+
     if (this.platform.is('hybrid')) {
-      // Display the new image by rewriting the 'file://' path to HTTP
-      // Details: https://ionicframework.com/docs/building/webview#file-protocol
       return {
         filepath: savedFile.uri,
         webviewPath: Capacitor.convertFileSrc(savedFile.uri),
         fileName,
       };
     } else {
-      // Use webPath to display the new image instead of base64 since it's
-      // already loaded into memory
       return {
         filepath: fileName,
         webviewPath: cameraPhoto.webPath,

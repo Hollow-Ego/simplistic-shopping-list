@@ -6,6 +6,16 @@
         <ion-icon name="add" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
+
+    <ion-item slot="secondary" color="primary">
+
+      <ion-select [value]="language" okText="{{'confirmButtonText' | translate}}"
+        cancelText="{{'cancelButtonText' | translate}}" (ionChange)="onLanguageChange($event)" interface="popover"
+        [selectedText]="language.toUpperCase()">
+        <ion-select-option *ngFor="let lang of availableLanguages" [value]="lang.short">{{lang.name}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
 

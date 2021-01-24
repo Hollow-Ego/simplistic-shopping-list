@@ -3,6 +3,8 @@
     "listingTitle": "Shopping List",
     "addButtonText": "Add",
     "deleteButtonText": "Delete",
+    "confirmButtonText": "Okay",
+    "cancelButtonText": "Cancel",
     "newEditItem":{
         "title-new":"New Item",
         "title-edit":"Edit Item",

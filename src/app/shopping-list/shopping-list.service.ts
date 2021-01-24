@@ -52,7 +52,6 @@ export class ShoppingListService {
       const item = new ShoppingListItem(name, amount, imgData);
       convertedList.set(id, item);
     }
-    console.dir(convertedList);
     this._shoppingList.next(convertedList);
   }
 
