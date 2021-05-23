@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
 	Plugins,
+	CameraPhoto,
+	CameraResultType,
+	CameraSource,
 	Capacitor,
 	FilesystemDirectory,
 	Toast,
