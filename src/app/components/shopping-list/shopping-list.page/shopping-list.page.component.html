@@ -1,11 +1,10 @@
 <ion-card>
   <ion-card-header>
-
     <ion-card-title>Shopping List Name</ion-card-title>
   </ion-card-header>
   <ion-card-content>
     <ion-list *ngFor="let item of items">
-      <app-shopping-list-item [item]="item"></app-shopping-list-item>
+      <ssl-populated-item [item]="item"></ssl-populated-item>
     </ion-list>
 
   </ion-card-content>

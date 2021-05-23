@@ -7,13 +7,12 @@ import { IonicModule } from '@ionic/angular';
 import { ShoppingListPageRoutingModule } from './shopping-list-routing.module';
 
 import { ShoppingListView } from './shopping-list.view';
-import { SharedModule } from '../shared/shared.module';
 
-import { ImageModalComponent } from '../shared/modals/image/image-modal.component';
-
-import { ImagePickerComponent } from '../shared/image-picker/image-picker.component';
 import { ShoppingListPageComponent } from './shopping-list.page/shopping-list.page.component';
-import { PopulatedItemComponent } from './shopping-list-item/populated-item.component';
+import { PopulatedItemComponent } from './shopping-list.page/populated-item/populated-item.component';
+
+import { SharedModule } from '../../shared/shared.module';
+import { ImageModalComponent } from '../modals/image-modal/image-modal.component';
 
 @NgModule({
 	imports: [

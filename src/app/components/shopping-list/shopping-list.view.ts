@@ -2,19 +2,19 @@ import { Store } from '@ngrx/store';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { ItemGroup } from '../../shared/classes/item-group.class';
+import { ItemLibrary } from '../../shared/classes/item-library.class';
+import { ShoppingList } from '../../shared/classes/shopping-list.class';
+import { LanguageDetails } from '../../shared/i18n/language-details.model';
+import { TranslationService } from '../../shared/i18n/translation.service';
 
-import { TranslationService } from '../shared/i18n/translation.service';
-import { LanguageDetails } from '../shared/i18n/language-details.model';
-
-import * as fromApp from '../store/app.reducer';
-import * as SLActions from '../store/shopping-list.actions';
-import * as Modes from '../shared/constants';
-import { ShoppingList } from '../shared/classes/shopping-list.class';
-import { ItemLibrary } from '../shared/classes/item-library.class';
-import { ItemGroup } from '../shared/classes/item-group.class';
+import * as fromApp from '../../store/app.reducer';
+import * as SLActions from '../../store/shopping-list.actions';
+import * as Modes from '../../shared/constants';
+import { AddEditModalComponent } from '../modals/add-edit-modal/add-edit-modal.component';
 
 @Component({
-	selector: 'app-shopping-list',
+	selector: 'ssl-shopping-list',
 	templateUrl: './shopping-list.view.html',
 	styleUrls: ['./shopping-list.view.scss'],
 })
@@ -53,6 +53,9 @@ export class ShoppingListView implements OnInit, OnDestroy {
 
 		this.language = this.translate.currentLanguage;
 		this.availableLanguages = this.translate.availableLanguages;
+
+		// WIP
+		this.onTestModal();
 	}
 
 	// async onEditItem(item: LibraryItem, slidingItem: IonItemSliding) {
@@ -80,6 +83,13 @@ export class ShoppingListView implements OnInit, OnDestroy {
 		// 	component: NewEditItemComponent,
 		// });
 		// await modal.present();
+	}
+
+	async onTestModal() {
+		const modal = await this.modalCtrl.create({
+			component: AddEditModalComponent,
+		});
+		await modal.present();
 	}
 
 	onLanguageChange() {

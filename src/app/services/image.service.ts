@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
 	Plugins,
-	CameraPhoto,
-	CameraResultType,
-	CameraSource,
 	Capacitor,
 	FilesystemDirectory,
 	Toast,
@@ -31,6 +28,7 @@ export class ImageService {
 		if (!cameraPhoto) {
 			return;
 		}
+		console.log(cameraPhoto);
 
 		// Write the file to the data directory
 		const fileName = new Date().getTime() + '.jpeg';
@@ -40,14 +38,14 @@ export class ImageService {
 			directory: FilesystemDirectory.Data,
 		});
 
-		// const pathParts = cameraPhoto.path.split('cache/');
-		// Filesystem.deleteFile({
-		//   path: 'Pictures/' + pathParts[1],
-		//   directory: FilesystemDirectory.Cache,
-		// }).catch(err => {
-		//   console.log(err);
-		//   Toast.show({ text: 'Error on deleting image' });
-		// });
+		const pathParts = cameraPhoto.path.split('cache/');
+		Filesystem.deleteFile({
+			path: 'Pictures/' + pathParts[1],
+			directory: FilesystemDirectory.Cache,
+		}).catch(err => {
+			console.log(err);
+			Toast.show({ text: 'Error on deleting image' });
+		});
 
 		if (this.platform.is('hybrid')) {
 			return {

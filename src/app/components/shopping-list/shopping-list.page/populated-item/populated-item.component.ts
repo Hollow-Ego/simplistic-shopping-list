@@ -4,17 +4,15 @@ import {
 	ModalController,
 	PopoverController,
 } from '@ionic/angular';
-import { ImageModalComponent } from '../../shared/modals/image/image-modal.component';
-import { LibraryItem } from '../../shared/models/library-item.model';
+import { ShoppingListService } from '../../../../services/shopping-list.service';
 
-import { ShoppingListService } from '../../services/shopping-list.service';
-import { ShoppingListItem } from '../../shared/models/shopping-list-item.model';
-import { PopulatedItem } from '../../shared/models/populated-item.model';
+import { PopulatedItem } from '../../../../shared/models/populated-item.model';
+import { ImageModalComponent } from '../../../modals/image-modal/image-modal.component';
 
 @Component({
-	selector: 'app-shopping-list-item',
-	templateUrl: './shopping-list-item.component.html',
-	styleUrls: ['./shopping-list-item.component.scss'],
+	selector: 'ssl-populated-item',
+	templateUrl: './populated-item.component.html',
+	styleUrls: ['./populated-item.component.scss'],
 })
 export class PopulatedItemComponent implements OnInit {
 	@Input() item: PopulatedItem;

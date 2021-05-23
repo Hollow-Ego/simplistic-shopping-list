@@ -2,9 +2,7 @@
   <ion-toolbar>
     <ion-title>{{ 'appname' | translate }}</ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="onAddItem()">
-        <ion-icon name="add" slot="icon-only"></ion-icon>
-      </ion-button>
+
     </ion-buttons>
 
     <ion-item slot="secondary" color="primary">
@@ -32,8 +30,14 @@
 <ion-content *ngIf="!isLoading">
   <ion-slides pager="true">
     <ion-slide *ngFor="let list of shoppingLists; index as i">
-      <app-shopping-list-page class="full-width" [shoppingList]="shoppingLists[i]" [library]="itemLibrary">
-      </app-shopping-list-page>
+      <ssl-shopping-list-page class="full-width" [shoppingList]="shoppingLists[i]" [library]="itemLibrary">
+      </ssl-shopping-list-page>
     </ion-slide>
   </ion-slides>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add" (click)="onAddItem()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

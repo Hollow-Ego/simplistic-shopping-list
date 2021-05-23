@@ -7,13 +7,13 @@ import {
 	Output,
 	ViewChild,
 } from '@angular/core';
-import { Capacitor } from '@capacitor/core';
+import { CameraPhoto, Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
-import { Image } from '../models/image.model';
-import { TranslationService } from '../i18n/translation.service';
+import { Image } from '../../shared/models/image.model';
+import { TranslationService } from '../../shared/i18n/translation.service';
 import { ImageService } from '../../services/image.service';
 @Component({
-	selector: 'app-image-picker',
+	selector: 'ssl-image-picker',
 	templateUrl: './image-picker.component.html',
 	styleUrls: ['./image-picker.component.scss'],
 })
@@ -47,13 +47,17 @@ export class ImagePickerComponent implements OnInit {
 			this.filePickerRef.nativeElement.click();
 			return;
 		}
-		const capturedImage = await this.imageService.takeImage().catch(error => {
-			if (this.useFilePicker) {
-				this.filePickerRef.nativeElement.click();
-			}
-			console.log(error);
-			return null;
-		});
+		const capturedImage: CameraPhoto = await this.imageService
+			.takeImage()
+			.catch(error => {
+				if (this.useFilePicker) {
+					console.log('Using file picker');
+
+					this.filePickerRef.nativeElement.click();
+				}
+				console.log(error);
+				return null;
+			});
 
 		this.selectedImage = await this.imageService.savePicture(capturedImage);
 		this.imagePick.emit(this.selectedImage);
