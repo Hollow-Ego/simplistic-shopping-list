@@ -7,7 +7,7 @@ import { Image } from './image.model';
 import { ShoppingListItem } from './shopping-list-item.model';
 
 export interface GeneralActionProps {
-	mode: Symbol;
+	mode: string;
 	itemLibrary?: ItemLibrary;
 	itemGroups?: ItemGroup[];
 	shoppingLists?: ShoppingList[];

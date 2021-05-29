@@ -4,7 +4,7 @@ import { ShoppingList } from '../classes/shopping-list.class';
 
 export interface State {
 	isLoading: boolean;
-	mode: Symbol;
+	mode: string;
 	currentListIdx: number;
 	itemLibrary: ItemLibrary;
 	itemGroups: ItemGroup[];

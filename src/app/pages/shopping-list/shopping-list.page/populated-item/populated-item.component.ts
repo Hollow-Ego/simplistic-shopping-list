@@ -4,10 +4,11 @@ import {
 	ModalController,
 	PopoverController,
 } from '@ionic/angular';
+import { AddEditModalComponent } from '../../../../components/modals/add-edit-modal/add-edit-modal.component';
+import { ImageModalComponent } from '../../../../components/modals/image-modal/image-modal.component';
 import { ShoppingListService } from '../../../../services/shopping-list.service';
-
+import * as Modes from '../../../../shared/constants';
 import { PopulatedItem } from '../../../../shared/models/populated-item.model';
-import { ImageModalComponent } from '../../../modals/image-modal/image-modal.component';
 
 @Component({
 	selector: 'ssl-populated-item',
@@ -55,14 +56,17 @@ export class PopulatedItemComponent implements OnInit {
 
 	async onEditItem(item: PopulatedItem, slidingItem: IonItemSliding) {
 		slidingItem.close();
+		const modal = await this.modalCtrl.create({
+			component: AddEditModalComponent,
+			componentProps: {
+				item: this.item,
+				mode: Modes.MODAL_EDIT_MODE,
+			},
+		});
+		await modal.present();
+	}
 
-		// const modal = await this.modalCtrl.create({
-		// 	component: NewEditItemComponent,
-		// 	componentProps: {
-		// 		isEditMode: true,
-		// 		item,
-		// 	},
-		// });
-		// await modal.present();
+	onError() {
+		console.log('This is an error');
 	}
 }

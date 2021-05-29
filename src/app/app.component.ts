@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { BackButtonEvent } from '@ionic/core';
-import { Plugins, Toast } from '@capacitor/core';
 import { TranslationService } from './shared/i18n/translation.service';
-const { App } = Plugins;
+import { App } from '@capacitor/app';
+import { Toast } from '@capacitor/toast';
+
 @Component({
 	selector: 'app-root',
 	templateUrl: 'app.component.html',

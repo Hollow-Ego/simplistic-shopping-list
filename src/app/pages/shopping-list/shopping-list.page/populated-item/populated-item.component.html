@@ -11,7 +11,7 @@
       </ion-text>
 
       <ion-thumbnail [slot]="'end'" *ngIf="item.imgData || item">
-        <ion-img *ngIf="item.imgData" [src]="item.imgData.webviewPath"
+        <ion-img *ngIf="item.imgData" [src]="item.imgData.webviewPath" default="assets/broken-img-placeholder.png"
           (click)="onItemClick(item.name, item.imgData.webviewPath)">
         </ion-img>
       </ion-thumbnail>

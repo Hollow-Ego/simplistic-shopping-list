@@ -1,21 +1,35 @@
 {
-    "appname": "Simple Einkaufsliste",
-    "listingTitle": "Einkaufsliste",
-    "addButtonText": "Hinzufügen",
-    "deleteButtonText": "Entfernen",
-    "confirmButtonText": "Okay",
-    "cancelButtonText": "Abbrechen",
-    "closeToast": "Erneut tippen um App zu schließen!",
-    "newEditItem":{
-        "title-new":"Neuer Artikel",
-        "title-edit":"Artikel bearbeiten",
-        "name" : "Name",
-        "amount": "Menge",
-        "imgUrl": "Bild",
-        "optionalText": "Optional",
-        "addText": "Hinzufügen",
-        "saveText":"Speichern",
-        "cancelText": "Abbrechen",
-        "takePictureText": "Bild aufnehmen/auswählen"
-    }
+	"aboutItems": {
+		"amount": "Menge",
+		"clearImageText": "Bild entfernen",
+		"imgUrl": "Bild",
+		"name": "Name",
+		"optionalText": "Optional",
+		"tags": "Tags",
+		"takePictureText": "Bild aufnehmen / auswählen",
+		"unit": "Einheit",
+		"warnImageLoadError": "Das Bild konnte nicht geladen werden!"
+	},
+	"appname": "Simple Einkaufsliste",
+	"common": {
+		"addText": "Hinzufügen",
+		"cancelText": "Abbrechen",
+		"confirmText": "Okay",
+		"deleteText": "Löschen",
+		"editText": "Bearbeiten",
+		"library": "Bibliothek",
+		"listsLong": "Einkaufslisten",
+		"listsShort": "Listen",
+		"saveText": "Speichern"
+	},
+	"messages": {
+		"closeToast": "Tippen Sie erneut auf Zurück, um die App zu schließen!"
+	},
+	"titles": {
+		"addItemTitle": "Neuen Artikel hinzufügen",
+		"editItemTitle": "Artikel bearbeiten",
+		"editModeTitle": "Bearbeiten",
+		"listingTitle": "Einkaufsliste",
+		"shoppingModeTitle": "Einkaufen"
+	}
 }

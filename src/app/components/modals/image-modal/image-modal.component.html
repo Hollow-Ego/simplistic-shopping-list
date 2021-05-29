@@ -4,7 +4,12 @@
       <ion-card-title>{{title}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-img [src]="imageUrl"></ion-img>
+      <ion-img [src]="imageUrl" default="assets/broken-img-placeholder.png" (ionError)="onLoadError()"></ion-img>
+
+      <ion-item color="warning" *ngIf="failedLoading">
+        <ion-label class="ion-text-wrap">{{ 'aboutItems.warnImageLoadError' | translate}}</ion-label>
+      </ion-item>
     </ion-card-content>
+
   </ion-card>
 </ion-content>

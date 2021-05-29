@@ -1,10 +1,15 @@
 <div class="picker">
-  <ion-img class="item-img" role="button" [src]="selectedImage.webviewPath" *ngIf="selectedImage && showPreview"
-    (click)="onPickImage()">
+  <ion-img class="item-img" role="button" [src]="webviewPath" (click)="onPickImage()" (ionError)="onLoadError()"
+    default="assets/broken-img-placeholder.png">
   </ion-img>
-  <ion-button color="primary" (click)="onPickImage()" *ngIf="!selectedImage || !showPreview">
-    <ion-icon slot="start" name="camera"></ion-icon>
-    <ion-label>{{'newEditItem.takePictureText' | translate}}</ion-label>
+</div>
+<ion-item color="warning" *ngIf="failedLoading">
+  <ion-label class="ion-text-wrap">{{ 'aboutItems.warnImageLoadError' | translate}}</ion-label>
+</ion-item>
+<div class="picker-controls">
+  <ion-button *ngIf="webviewPath !== imgPlaceholderPath" (click)="onClearImage()" expand="block" fill="clear"
+    shape="round">
+    {{ 'aboutItems.clearImageText' | translate}}
   </ion-button>
 </div>
 <input type="file" *ngIf="useFilePicker" accept="image/jpeg" #filePicker (change)="onFilePicked($event)" />

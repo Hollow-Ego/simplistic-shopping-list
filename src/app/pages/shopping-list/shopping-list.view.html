@@ -1,19 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ 'appname' | translate }}</ion-title>
-    <ion-buttons slot="primary">
-
-    </ion-buttons>
-
-    <ion-item slot="secondary" color="primary">
-
-      <ion-select [value]="language" okText="{{'confirmButtonText' | translate}}"
-        cancelText="{{'cancelButtonText' | translate}}" (ionChange)="onLanguageChange()" [(ngModel)]="language"
-        interface="popover" [selectedText]="language.toUpperCase()">
-        <ion-select-option *ngFor="let lang of availableLanguages" [value]="lang.short">{{lang.name}}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
+    <ion-segment (ionChange)="onModeChange($event)" value="{{currentMode}}">
+      <ion-segment-button value="{{modes.EDIT_MODE}}">
+        <ion-label>{{ 'titles.editModeTitle' | translate }}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="{{modes.SHOPPING_MODE}}">
+        <ion-label>{{ 'titles.shoppingModeTitle' | translate }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <ssl-language-picker slot="secondary"></ssl-language-picker>
   </ion-toolbar>
 </ion-header>
 
@@ -36,8 +31,8 @@
   </ion-slides>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="add" (click)="onAddItem()"></ion-icon>
+    <ion-fab-button (click)="onAddItem()">
+      <ion-icon name="pricetag-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

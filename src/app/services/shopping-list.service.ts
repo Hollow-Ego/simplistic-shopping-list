@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { Storage } from '@ionic/storage';
 import { Image } from '../shared/models/image.model';
 import { Platform } from '@ionic/angular';
-import { Plugins, FilesystemDirectory } from '@capacitor/core';
 import { ImageService } from './image.service';
 import { ItemLibrary } from '../shared/classes/item-library.class';
 import { ShoppingList } from '../shared/classes/shopping-list.class';
@@ -19,7 +18,6 @@ import {
 } from '../shared/models/action-props.model';
 import { ShoppingListItem } from '../shared/models/shopping-list-item.model';
 
-const { Filesystem } = Plugins;
 @Injectable({
 	providedIn: 'root',
 })

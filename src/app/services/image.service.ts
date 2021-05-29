@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import {
-	Plugins,
-	CameraPhoto,
+	Camera,
 	CameraResultType,
 	CameraSource,
-	Capacitor,
-	FilesystemDirectory,
-	Toast,
-} from '@capacitor/core';
+	Photo,
+} from '@capacitor/camera';
+import { Capacitor } from '@capacitor/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import { Toast } from '@capacitor/toast';
 import { Platform } from '@ionic/angular';
-const { Filesystem, Camera } = Plugins;
 
 @Injectable({
 	providedIn: 'root',
@@ -19,35 +18,27 @@ export class ImageService {
 
 	async takeImage() {
 		const capturedImage = await Camera.getPhoto({
-			resultType: CameraResultType.Base64,
+			resultType: CameraResultType.Uri,
 			source: CameraSource.Prompt,
 			quality: 100,
-			correctOrientation: true,
 		});
 		return capturedImage;
 	}
 
-	async savePicture(cameraPhoto: CameraPhoto) {
-		if (!cameraPhoto) {
+	async savePicture(rawPhoto: Photo) {
+		if (!rawPhoto) {
 			return;
 		}
-		console.log(cameraPhoto);
 
 		// Write the file to the data directory
 		const fileName = new Date().getTime() + '.jpeg';
-		const savedFile = await Filesystem.writeFile({
-			path: fileName,
-			data: cameraPhoto.base64String,
-			directory: FilesystemDirectory.Data,
-		});
 
-		const pathParts = cameraPhoto.path.split('cache/');
-		Filesystem.deleteFile({
-			path: 'Pictures/' + pathParts[1],
-			directory: FilesystemDirectory.Cache,
-		}).catch(err => {
-			console.log(err);
-			Toast.show({ text: 'Error on deleting image' });
+		const base64Data = await this.readAsBase64(rawPhoto);
+
+		const savedFile = await Filesystem.writeFile({
+			data: base64Data,
+			path: fileName,
+			directory: Directory.Data,
 		});
 
 		if (this.platform.is('hybrid')) {
@@ -56,19 +47,18 @@ export class ImageService {
 				webviewPath: Capacitor.convertFileSrc(savedFile.uri),
 				fileName,
 			};
-		} else {
-			return {
-				filepath: fileName,
-				webviewPath: cameraPhoto.webPath,
-				fileName,
-			};
 		}
+		return {
+			filepath: fileName,
+			webviewPath: rawPhoto.webPath,
+			fileName,
+		};
 	}
 
 	async getWebViewPathImage(filePath: string) {
 		const readFile = await Filesystem.readFile({
 			path: filePath,
-			directory: FilesystemDirectory.Data,
+			directory: Directory.Data,
 		});
 
 		// Web platform only: Load the photo as base64 data
@@ -78,29 +68,29 @@ export class ImageService {
 	async deleteImage(path: string) {
 		Filesystem.deleteFile({
 			path,
-			directory: FilesystemDirectory.Data,
+			directory: Directory.Data,
 		}).catch(err => {
 			console.log(err);
 			Toast.show({ text: 'Error on deleting image' });
 		});
 	}
 
-	async readAsBase64(cameraPhoto: CameraPhoto) {
+	async readAsBase64(Photo: Photo) {
 		// Fetch the photo, read as a blob, then convert to base64 format
-		if (!cameraPhoto) {
+		if (!Photo) {
 			return;
 		}
 		// "hybrid" will detect Cordova or Capacitor
 		if (this.platform.is('hybrid')) {
 			// Read the file into base64 format
 			const file = await Filesystem.readFile({
-				path: cameraPhoto.path,
+				path: Photo.path,
 			});
 
 			return file.data;
 		} else {
 			// Fetch the photo, read as a blob, then convert to base64 format
-			const response = await fetch(cameraPhoto.webPath);
+			const response = await fetch(Photo.webPath);
 			const blob = await response.blob();
 
 			return (await this.convertBlobToBase64(blob)) as string;

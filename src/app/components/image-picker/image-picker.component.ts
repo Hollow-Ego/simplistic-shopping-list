@@ -7,30 +7,32 @@ import {
 	Output,
 	ViewChild,
 } from '@angular/core';
-import { CameraPhoto, Capacitor } from '@capacitor/core';
+import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 import { Image } from '../../shared/models/image.model';
 import { TranslationService } from '../../shared/i18n/translation.service';
 import { ImageService } from '../../services/image.service';
+import { Photo } from '@capacitor/camera';
 @Component({
 	selector: 'ssl-image-picker',
 	templateUrl: './image-picker.component.html',
 	styleUrls: ['./image-picker.component.scss'],
 })
 export class ImagePickerComponent implements OnInit {
-	@ViewChild('filePicker') filePickerRef: ElementRef<HTMLInputElement>;
-	@Output() imagePick = new EventEmitter<Image>();
-	@Input() showPreview = true;
-	@Input() pickedImage = null;
-
-	public selectedImage: Image;
+	public pickedImg: Image;
 	public useFilePicker = false;
 
-	constructor(
-		private platform: Platform,
-		private translate: TranslationService,
-		private imageService: ImageService
-	) {}
+	public imgPlaceholderPath = 'assets/img-placeholder.png';
+	public filepath: string = '';
+	public webviewPath: string = this.imgPlaceholderPath;
+	public fileName: string = '';
+
+	@ViewChild('filePicker') filePickerRef: ElementRef<HTMLInputElement>;
+	@Output() imagePick = new EventEmitter<Image>();
+	@Input() existingImg: Image = null;
+	public failedLoading: boolean;
+
+	constructor(private platform: Platform, private imageService: ImageService) {}
 
 	ngOnInit() {
 		if (
@@ -39,7 +41,12 @@ export class ImagePickerComponent implements OnInit {
 		) {
 			this.useFilePicker = true;
 		}
-		this.selectedImage = this.pickedImage;
+		if (this.existingImg) {
+			const { filepath, webviewPath, fileName } = this.existingImg;
+			this.filepath = filepath;
+			this.webviewPath = webviewPath;
+			this.fileName = fileName;
+		}
 	}
 
 	async onPickImage() {
@@ -47,20 +54,29 @@ export class ImagePickerComponent implements OnInit {
 			this.filePickerRef.nativeElement.click();
 			return;
 		}
-		const capturedImage: CameraPhoto = await this.imageService
+		const capturedImage: Photo = await this.imageService
 			.takeImage()
 			.catch(error => {
-				if (this.useFilePicker) {
-					console.log('Using file picker');
+				if (error.message === 'User cancelled photos app' && this.existingImg) {
+					return null;
+				}
 
+				if (this.useFilePicker) {
 					this.filePickerRef.nativeElement.click();
 				}
-				console.log(error);
+
 				return null;
 			});
 
-		this.selectedImage = await this.imageService.savePicture(capturedImage);
-		this.imagePick.emit(this.selectedImage);
+		if (capturedImage) {
+			this.pickedImg = await this.imageService.savePicture(capturedImage);
+			const { filepath, webviewPath, fileName } = this.pickedImg;
+			this.filepath = filepath;
+			this.webviewPath = webviewPath;
+			this.fileName = fileName;
+			this.imagePick.emit(this.pickedImg);
+			return;
+		}
 	}
 
 	onFilePicked(event: Event) {
@@ -72,7 +88,7 @@ export class ImagePickerComponent implements OnInit {
 		const fileName = new Date().getTime() + '.jpeg';
 		fr.onload = () => {
 			const dataUrl = fr.result.toString();
-			this.selectedImage = {
+			this.pickedImg = {
 				filepath: '',
 				webviewPath: dataUrl,
 				fileName,
@@ -80,6 +96,22 @@ export class ImagePickerComponent implements OnInit {
 		};
 
 		fr.readAsDataURL(image);
-		this.imagePick.emit(this.selectedImage);
+		this.imagePick.emit(this.pickedImg);
+	}
+
+	onClearImage() {
+		this.filepath = '';
+		this.webviewPath = this.imgPlaceholderPath;
+		this.fileName = '';
+		this.failedLoading = false;
+		this.imagePick.emit(null);
+	}
+
+	onLoadError() {
+		this.failedLoading = true;
+	}
+
+	onDidLoad() {
+		this.failedLoading = false;
 	}
 }

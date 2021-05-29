@@ -2,21 +2,32 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { IonicModule } from '@ionic/angular';
-import { Plugins } from '@capacitor/core';
 import { AddEditModalComponent } from '../components/modals/add-edit-modal/add-edit-modal.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ImagePickerComponent } from '../components/image-picker/image-picker.component';
-
-const { Filesystem, Camera } = Plugins;
+import { ImagePreloadDirective } from './image-preload.directive';
+import { LanguagePickerComponent } from '../components/language-picker/language-picker.component';
 
 @NgModule({
-	declarations: [AddEditModalComponent, ImagePickerComponent],
+	declarations: [
+		AddEditModalComponent,
+		ImagePickerComponent,
+		ImagePreloadDirective,
+		LanguagePickerComponent,
+	],
 	imports: [
-		CommonModule,
-		IonicModule,
 		TranslateModule.forChild({ extend: true }),
 		ReactiveFormsModule,
+		CommonModule,
+		IonicModule,
+		FormsModule,
 	],
-	exports: [TranslateModule],
+	exports: [
+		TranslateModule,
+		ImagePreloadDirective,
+		CommonModule,
+		IonicModule,
+		LanguagePickerComponent,
+	],
 })
 export class SharedModule {}
