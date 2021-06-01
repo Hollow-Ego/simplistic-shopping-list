@@ -1,0 +1,29 @@
+<ion-grid fixed class="ion-no-margin ion-no-padding ion-margin-top">
+  <ion-row class="ion-justify-content-start">
+    <ion-col size="12">
+      <ion-label>{{'uiStrings.addTagText'| translate}}</ion-label>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-align-items-center ion-margin-top">
+    <ion-col size="12"></ion-col>
+    <ion-chip *ngFor="let tag of tags; index as i" color="primary">
+      <ion-label>{{tag}}</ion-label>
+      <ion-icon (click)="onRemoveTag(i)" name="close-circle"></ion-icon>
+    </ion-chip>
+    <ion-button (click)="onClickDropdown()" fill="clear">
+      <ion-icon slot="icon-only" name="add"></ion-icon>
+    </ion-button>
+  </ion-row>
+</ion-grid>
+
+<ion-card class="tag-dropdown-content ion-no-margin" [hidden]="!isOpenDropdown" color="dark">
+  <ion-searchbar list [(ngModel)]="newTag" (keydown.enter)="onConfirm()" clearInput="true" debounce="500"
+    [placeholder]="'uiStrings.addTagPlaceholder'| translate">
+  </ion-searchbar>
+  <div class="dropdown-items">
+    <ion-chip *ngFor="let tag of availableTags; index as i" color="primary" (click)="onChipSelect(tag)"
+      [hidden]="!canBeSelected(tag)">
+      <ion-label>{{tag}}</ion-label>
+    </ion-chip>
+  </div>
+</ion-card>

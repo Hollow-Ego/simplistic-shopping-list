@@ -1,0 +1,11 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Shopping List Name</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list *ngFor="let item of items">
+      <pxsl1-populated-item [item]="item"></pxsl1-populated-item>
+    </ion-list>
+
+  </ion-card-content>
+</ion-card>

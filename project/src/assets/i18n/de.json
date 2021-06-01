@@ -1,0 +1,42 @@
+{
+	"aboutItems": {
+		"amount": "Menge",
+		"clearImageText": "Bild entfernen",
+		"currency": "Währung",
+		"imgUrl": "Bild",
+		"name": "Name",
+		"optionalText": "Optional",
+		"price": "Preis pro Einheit",
+		"tags": "Tags",
+		"takePictureText": "Bild aufnehmen / auswählen",
+		"unit": "Einheit",
+		"warnImageLoadError": "Das Bild konnte nicht geladen werden!"
+	},
+	"appname": "Simple Einkaufsliste",
+	"common": {
+		"addText": "Hinzufügen",
+		"cancelText": "Abbrechen",
+		"confirmText": "Okay",
+		"deleteText": "Löschen",
+		"editText": "Bearbeiten",
+		"saveText": "Speichern",
+		"searchText": "Suchen..."
+	},
+	"messages": {
+		"closeToast": "Tippen Sie erneut auf Zurück, um die App zu schließen!"
+	},
+	"titles": {
+		"addItemTitle": "Neuen Artikel hinzufügen",
+		"editItemTitle": "Artikel bearbeiten",
+		"editModeTitle": "Bearbeiten",
+		"listingTitle": "Einkaufsliste",
+		"shoppingModeTitle": "Einkaufen"
+	},
+	"uiStrings": {
+		"addTagPlaceholder": "Tag-Namen eingeben",
+		"addTagText": "Tags",
+		"library": "Bibliothek",
+		"listsLong": "Einkaufslisten",
+		"listsShort": "Listen"
+	}
+}

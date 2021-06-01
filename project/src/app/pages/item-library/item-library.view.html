@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{'uiStrings.library' | translate}}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar inputmode="text" (ionChange)="onSearchChange($event)"
+      placeholder="{{'common.searchText' | translate}}">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list *ngIf="itemLibrary">
+    <pxsl1-library-list-item *ngFor="let item of itemLibrary.values()" [item]="item"></pxsl1-library-list-item>
+  </ion-list>
+</ion-content>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="onNewLibraryItem()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
